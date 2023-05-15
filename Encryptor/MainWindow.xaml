@@ -1,0 +1,56 @@
+﻿<Window x:Class="Encryptor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Encryptor"
+        ResizeMode="NoResize"
+        Width="520" Height="360"
+        mc:Ignorable="d" Loaded="Window_Loaded">
+    <Window.DataContext>
+        <local:MainViewModel></local:MainViewModel>
+    </Window.DataContext>
+    <TabControl>
+        <TabItem Header="烧录">
+            <Canvas>
+                <TextBlock Canvas.Left="16" Canvas.Top="65">主程序烧录码</TextBlock>
+                <TextBlock Canvas.Left="36" Canvas.Top="125">参数文件</TextBlock>
+                <TextBlock Canvas.Left="58" Canvas.Top="185">加密</TextBlock>
+                <TextBox Width="240" Height="30" Canvas.Left="150" Canvas.Top="60" Text="{Binding ProgramFile, Mode=TwoWay}"></TextBox>
+                <TextBox Width="240" Height="30" Canvas.Left="150" Canvas.Top="120" Text="{Binding ParameterFile, Mode=TwoWay}"></TextBox>
+                <CheckBox Canvas.Left="109" Canvas.Top="65" IsChecked="{Binding DownloadProgram, Mode=TwoWay}"></CheckBox>
+                <CheckBox Canvas.Left="109" Canvas.Top="128" IsChecked="{Binding DownloadParameter, Mode=TwoWay}"/>
+                <CheckBox Canvas.Left="109" Canvas.Top="187" IsChecked="{Binding Encryption}"/>
+                <Button Width="60" Height="20" Canvas.Left="400" Canvas.Top="65" Content="选择文件" Click="OnSelectProgramFile"/>
+                <Button Width="60" Height="20" Canvas.Left="400" Canvas.Top="125" Content="选择文件" Click="OnSelectParameterFile"/>
+                <Button Width="60" Height="60" Canvas.Left="400" Canvas.Top="224" Click="DownloadButtonClicked">烧录</Button>
+            </Canvas>
+        </TabItem>
+        <TabItem Header="发送数据">
+            <Canvas>
+                <TextBox x:Name="RecvData" Width="354" Height="83" Canvas.Left="122" Canvas.Top="39" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button Content="一键检测" Name="Button1" Click="BtnSend_Click" Canvas.Left="249" Canvas.Top="178" HorizontalAlignment="Left" VerticalAlignment="Top" Height="42" Width="100"/>
+                <GroupBox Header="串口设置">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0">
+                                <Label Content="串口号" FontSize="10" Grid.Row="0"/>
+                                <ComboBox Name="CbSeriPorts" DropDownOpened="CbSeriPorts_DropDownOpened" Grid.Row="0" Width="70" Height="20" HorizontalAlignment="Left"/>
+                            </DockPanel >
+                            <DockPanel Grid.Row="1">
+                                <Label Content="波特率" FontSize="10" Grid.Row="1"/>
+                                <ComboBox Name="Cbbaudrate" IsEnabled="{Binding Path=IsEnabled,ElementName=CbSeriPorts}" Grid.Row="1" Width="70" Height="20" HorizontalAlignment="Left"/>
+                            </DockPanel>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+                <Label Content="接收区" Canvas.Left="276" Canvas.Top="14" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="1.013,0.599"/>
+            </Canvas>
+        </TabItem>
+    </TabControl>
+</Window>
